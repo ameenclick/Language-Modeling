@@ -17,7 +17,18 @@ Parameters: str
 Returns: 2D list of strs
 '''
 def loadBook(filename):
-    return
+    freader = open(filename, "r")
+    words=[]
+    for line in freader.readlines():
+        line=line.replace("\n","")
+        wordsinLine=[]
+        for word in line.split(" "):
+            if(word != ""):
+                wordsinLine.append(word)
+        if(wordsinLine != []):
+            words.append(wordsinLine)
+    freader.close()
+    return words
 
 
 '''
@@ -27,7 +38,10 @@ Parameters: 2D list of strs
 Returns: int
 '''
 def getCorpusLength(corpus):
-    return
+    length=0
+    for line in corpus:
+        length+=len(line)
+    return length
 
 
 '''
@@ -37,7 +51,12 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def buildVocabulary(corpus):
-    return
+    vocabulary=[]
+    for eachLine in corpus:
+        for word in eachLine:
+            if(word not in vocabulary):
+                vocabulary.append(word)
+    return vocabulary
 
 
 '''
@@ -286,9 +305,12 @@ def scatterPlot(xs, ys, labels, title):
 # This code runs the test cases to check your work
 if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.week1Tests()
-    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    test.runWeek1()
+    test.testLoadBook()
+    test.testGetCorpusLength()
+    test.testBuildVocabulary()
+    #test.week1Tests()
+    #print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    #test.runWeek1()
 
     ## Uncomment these for Week 2 ##
 """
