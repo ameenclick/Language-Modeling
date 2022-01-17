@@ -38,7 +38,10 @@ Parameters: 2D list of strs
 Returns: int
 '''
 def getCorpusLength(corpus):
-    return
+    length=0
+    for line in corpus:
+        length+=len(line)
+    return length
 
 
 '''
@@ -298,6 +301,7 @@ def scatterPlot(xs, ys, labels, title):
 if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
     test.testLoadBook()
+    test.testGetCorpusLength()
     #test.week1Tests()
     #print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     #test.runWeek1()
