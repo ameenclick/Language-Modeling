@@ -51,7 +51,12 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def buildVocabulary(corpus):
-    return
+    vocabulary=[]
+    for eachLine in corpus:
+        for word in eachLine:
+            if(word not in vocabulary):
+                vocabulary.append(word)
+    return vocabulary
 
 
 '''
@@ -302,6 +307,7 @@ if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
     test.testLoadBook()
     test.testGetCorpusLength()
+    test.testBuildVocabulary()
     #test.week1Tests()
     #print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     #test.runWeek1()
