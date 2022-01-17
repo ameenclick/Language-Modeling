@@ -113,7 +113,16 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def countBigrams(corpus):
-    return
+    bigrams={}
+    for lines in corpus:
+        for index in range(len(lines)-1):
+            if lines[index] not in bigrams:
+                bigrams[lines[index]]={ lines[index+1]: 0}
+            else:
+                if(lines[index+1] not in bigrams[lines[index]]):
+                    bigrams[lines[index]][lines[index+1]] = 0
+            bigrams[lines[index]][lines[index+1]] += 1
+    return bigrams
 
 
 ### WEEK 2 ###
@@ -322,13 +331,7 @@ def scatterPlot(xs, ys, labels, title):
 # This code runs the test cases to check your work
 if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
-    test.testLoadBook()
-    test.testGetCorpusLength()
-    test.testBuildVocabulary()
-    test.testCountUnigrams()
-    test.testGetStartWords()
-    test.testCountStartWords()
-    #test.week1Tests()
+    test.week1Tests()
     #print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
     #test.runWeek1()
 
