@@ -17,7 +17,18 @@ Parameters: str
 Returns: 2D list of strs
 '''
 def loadBook(filename):
-    return
+    freader = open(filename, "r")
+    words=[]
+    for line in freader.readlines():
+        line=line.replace("\n","")
+        wordsinLine=[]
+        for word in line.split(" "):
+            if(word != ""):
+                wordsinLine.append(word)
+        if(wordsinLine != []):
+            words.append(wordsinLine)
+    freader.close()
+    return words
 
 
 '''
@@ -27,7 +38,10 @@ Parameters: 2D list of strs
 Returns: int
 '''
 def getCorpusLength(corpus):
-    return
+    length=0
+    for line in corpus:
+        length+=len(line)
+    return length
 
 
 '''
@@ -37,7 +51,12 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def buildVocabulary(corpus):
-    return
+    vocabulary=[]
+    for eachLine in corpus:
+        for word in eachLine:
+            if(word not in vocabulary):
+                vocabulary.append(word)
+    return vocabulary
 
 
 '''
@@ -47,7 +66,13 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countUnigrams(corpus):
-    return
+    count={}
+    for eachLine in corpus:
+        for word in eachLine:
+            if(word not in count):
+                count[word]=0
+            count[word] += 1
+    return count
 
 
 '''
@@ -57,7 +82,11 @@ Parameters: 2D list of strs
 Returns: list of strs
 '''
 def getStartWords(corpus):
-    return
+    startWords=[]
+    for eachLine in corpus:
+        if(eachLine[0] not in startWords):
+            startWords.append(eachLine[0])
+    return startWords
 
 
 '''
@@ -67,7 +96,14 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to ints
 '''
 def countStartWords(corpus):
-    return
+    startWords=getStartWords(corpus)
+    count={}
+    for line in corpus:
+        if(line[0] in startWords):
+            if line[0] not in count:
+                count[line[0]]=0
+            count[line[0]] += 1
+    return count
 
 
 '''
@@ -77,7 +113,16 @@ Parameters: 2D list of strs
 Returns: dict mapping strs to (dicts mapping strs to ints)
 '''
 def countBigrams(corpus):
-    return
+    bigrams={}
+    for lines in corpus:
+        for index in range(len(lines)-1):
+            if lines[index] not in bigrams:
+                bigrams[lines[index]]={ lines[index+1]: 0}
+            else:
+                if(lines[index+1] not in bigrams[lines[index]]):
+                    bigrams[lines[index]][lines[index+1]] = 0
+            bigrams[lines[index]][lines[index+1]] += 1
+    return bigrams
 
 
 ### WEEK 2 ###
@@ -89,7 +134,13 @@ Parameters: list of strs
 Returns: list of floats
 '''
 def buildUniformProbs(unigrams):
-    return
+    probs=[]
+    n=len(unigrams)
+    lenUnigram=n
+    while(n>0):
+        probs.append(1/lenUnigram)
+        n-=1
+    return probs
 
 
 '''
@@ -291,9 +342,10 @@ if __name__ == "__main__":
     test.runWeek1()
 
     ## Uncomment these for Week 2 ##
-"""
+
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    test.week2Tests()
+    test.testBuildUniformProbs()
+"""    test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
 """
