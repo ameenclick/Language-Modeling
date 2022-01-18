@@ -134,7 +134,13 @@ Parameters: list of strs
 Returns: list of floats
 '''
 def buildUniformProbs(unigrams):
-    return
+    probs=[]
+    n=len(unigrams)
+    lenUnigram=n
+    while(n>0):
+        probs.append(1/lenUnigram)
+        n-=1
+    return probs
 
 
 '''
@@ -332,13 +338,14 @@ def scatterPlot(xs, ys, labels, title):
 if __name__ == "__main__":
     print("\n" + "#"*15 + " WEEK 1 TESTS " +  "#" * 16 + "\n")
     test.week1Tests()
-    #print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
-    #test.runWeek1()
+    print("\n" + "#"*15 + " WEEK 1 OUTPUT " + "#" * 15 + "\n")
+    test.runWeek1()
 
     ## Uncomment these for Week 2 ##
-"""
+
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    test.week2Tests()
+    test.testBuildUniformProbs()
+"""    test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
 """
