@@ -4,6 +4,7 @@ Name:
 Roll No:
 """
 
+from operator import index
 import language_tests as test
 
 project = "Language" # don't edit this
@@ -182,7 +183,16 @@ Parameters: int ; list of strs ; list of floats ; list of strs
 Returns: dict mapping strs to floats
 '''
 def getTopWords(count, words, probs, ignoreList):
-    return
+    topWords={}
+    while(count>0):
+        top=max(probs)
+        topIndex=probs.index(top)
+        if(words[topIndex] not in ignoreList):
+            topWords[words[topIndex]]=top
+            count -= 1
+        probs.pop(topIndex)
+        words.pop(topIndex)
+    return topWords
 
 
 '''
@@ -359,6 +369,7 @@ if __name__ == "__main__":
     test.testBuildUniformProbs()
     test.testBuildUnigramProbs()
     test.testBuildBigramProbs()
+    test.testGetTopWords()
 """    test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
