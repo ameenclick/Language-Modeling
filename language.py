@@ -4,7 +4,7 @@ Name:
 Roll No:
 """
 
-from operator import index
+from operator import index, le
 import language_tests as test
 
 project = "Language" # don't edit this
@@ -201,7 +201,7 @@ generateTextFromUnigrams(count, words, probs)
 Parameters: int ; list of strs ; list of floats
 Returns: str
 '''
-from random import choices
+from random import choice, choices
 def generateTextFromUnigrams(count, words, probs):
     newStr=""
     while(count>0):
@@ -218,7 +218,17 @@ Parameters: int ; list of strs ; list of floats ; dict mapping strs to (dicts ma
 Returns: str
 '''
 def generateTextFromBigrams(count, startWords, startWordProbs, bigramProbs):
-    return
+    newStr=""
+    while(count>0):
+        if(newStr == "" or lastWord == "."):
+            choice=choices(startWords,weights=startWordProbs)
+            newStr += choice[0]+" "
+        else:
+            choice=choices(bigramProbs[choice[0]]["words"], weights=bigramProbs[choice[0]]["probs"])
+            newStr += choice[0]+" "
+        lastWord=choice[0]
+        count -= 1
+    return newStr
 
 
 ### WEEK 3 ###
@@ -371,15 +381,9 @@ if __name__ == "__main__":
     ## Uncomment these for Week 2 ##
 
     print("\n" + "#"*15 + " WEEK 2 TESTS " +  "#" * 16 + "\n")
-    test.testBuildUniformProbs()
-    test.testBuildUnigramProbs()
-    test.testBuildBigramProbs()
-    test.testGetTopWords()
-    test.testGenerateTextFromUnigrams()
-"""    test.week2Tests()
+    test.week2Tests()
     print("\n" + "#"*15 + " WEEK 2 OUTPUT " + "#" * 15 + "\n")
     test.runWeek2()
-"""
 
     ## Uncomment these for Week 3 ##
 """
