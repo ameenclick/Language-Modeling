@@ -201,7 +201,7 @@ generateTextFromUnigrams(count, words, probs)
 Parameters: int ; list of strs ; list of floats
 Returns: str
 '''
-from random import choice, choices
+from random import choices
 def generateTextFromUnigrams(count, words, probs):
     newStr=""
     while(count>0):
@@ -261,7 +261,12 @@ Parameters: 2D list of strs
 Returns: None
 '''
 def graphTopStartWords(corpus):
-    return
+    startWordsCount=countStartWords(corpus)
+    startWords=list(startWordsCount.keys())
+    probs=buildUnigramProbs(startWords,startWordsCount,len(startWords))
+    top50=getTopWords(50,startWords,probs,ignore)
+    barPlot(top50, "Top Starting Words")
+    return None
 
 
 '''
@@ -271,7 +276,12 @@ Parameters: 2D list of strs ; str
 Returns: None
 '''
 def graphTopNextWords(corpus, word):
-    return
+    unigramCounts=countUnigrams(corpus)
+    bigramCounts=countBigrams(corpus)
+    nextWords=buildBigramProbs(unigramCounts,bigramCounts)
+    top10=getTopWords(10,nextWords[word]["words"],nextWords[word]["probs"],ignore)
+    barPlot(top10, "Top 10 Bigrams of Book for word "+word)
+    return None
 
 
 '''
