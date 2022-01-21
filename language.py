@@ -246,7 +246,7 @@ Returns: None
 '''
 def graphTop50Words(corpus):
     unigramsCount=countUnigrams(corpus)
-    unigram=list(unigramsCount.keys())
+    unigram=list(unigramsCount.keys())#buildVocabulary(corpus)
     totalCount=len(unigram)
     probs=buildUnigramProbs(unigram,unigramsCount,totalCount)
     top50=getTopWords(50,unigram,probs, ignore)
@@ -262,7 +262,7 @@ Returns: None
 '''
 def graphTopStartWords(corpus):
     startWordsCount=countStartWords(corpus)
-    startWords=list(startWordsCount.keys())
+    startWords=list(startWordsCount.keys())#buildVocabulary(corpus)
     probs=buildUnigramProbs(startWords,startWordsCount,len(startWords))
     top50=getTopWords(50,startWords,probs,ignore)
     barPlot(top50, "Top Starting Words")
@@ -291,7 +291,31 @@ Parameters: 2D list of strs ; 2D list of strs ; int
 Returns: dict mapping strs to (lists of values)
 '''
 def setupChartData(corpus1, corpus2, topWordCount):
-    return
+    unigramCorp1=countUnigrams(corpus1)
+    corp1Word=buildVocabulary(corpus1)
+    corp1Probs=buildUnigramProbs(corp1Word,unigramCorp1,getCorpusLength(corpus1))
+    unigramCorp2=countUnigrams(corpus2)
+    corp2Word=buildVocabulary(corpus2)
+    corp2Probs=buildUnigramProbs(corp2Word,unigramCorp2,getCorpusLength(corpus2))
+    topNCorp1=getTopWords(topWordCount,corp1Word,corp1Probs,ignore)
+    topNCorp2=getTopWords(topWordCount,corp2Word,corp2Probs,ignore)
+    topN=list(topNCorp1.keys())
+    for each in topNCorp2.keys():
+        if(each not in topN):
+            topN.append(each)
+    topNCorps1Probs=[]
+    topNCorps2Probs=[]
+    for word in topN:
+        if(word in topNCorp1):
+            topNCorps1Probs.append(topNCorp1[word])
+        else:
+            topNCorps1Probs.append(0)
+    for word in topN:
+        if(word in topNCorp2):
+            topNCorps2Probs.append(topNCorp2[word])
+        else:
+            topNCorps2Probs.append(0)
+    return {"topWords": topN, "corpus1Probs": topNCorps1Probs, "corpus2Probs": topNCorps2Probs}
 
 
 '''
@@ -301,7 +325,9 @@ Parameters: 2D list of strs ; str ; 2D list of strs ; str ; int ; str
 Returns: None
 '''
 def graphTopWordsSideBySide(corpus1, name1, corpus2, name2, numWords, title):
-    return
+    chartData=setupChartData(corpus1,corpus2,numWords)
+    sideBySideBarPlots(chartData["topWords"], chartData["corpus1Probs"], chartData["corpus2Probs"], name1, name2, title)
+    return None
 
 
 '''
@@ -311,7 +337,9 @@ Parameters: 2D list of strs ; 2D list of strs ; int ; str
 Returns: None
 '''
 def graphTopWordsInScatterplot(corpus1, corpus2, numWords, title):
-    return
+    chartData=setupChartData(corpus1,corpus2,numWords)
+    scatterPlot(chartData["corpus1Probs"], chartData["corpus2Probs"],chartData["topWords"],title)
+    return None
 
 
 ### WEEK 3 PROVIDED CODE ###
