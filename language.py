@@ -246,7 +246,7 @@ Returns: None
 '''
 def graphTop50Words(corpus):
     unigramsCount=countUnigrams(corpus)
-    unigram=list(unigramsCount.keys())#buildVocabulary(corpus)
+    unigram=buildVocabulary(corpus)
     totalCount=len(unigram)
     probs=buildUnigramProbs(unigram,unigramsCount,totalCount)
     top50=getTopWords(50,unigram,probs, ignore)
@@ -261,11 +261,11 @@ Parameters: 2D list of strs
 Returns: None
 '''
 def graphTopStartWords(corpus):
+    startWords=getStartWords(corpus)
     startWordsCount=countStartWords(corpus)
-    startWords=list(startWordsCount.keys())#buildVocabulary(corpus)
-    probs=buildUnigramProbs(startWords,startWordsCount,len(startWords))
+    probs=buildUnigramProbs(startWords,startWordsCount,getCorpusLength(corpus))
     top50=getTopWords(50,startWords,probs,ignore)
-    barPlot(top50, "Top Starting Words")
+    barPlot(top50, "Top 50 Starting Words")
     return None
 
 
